@@ -1,9 +1,8 @@
-import { Pool } from 'pg';
-import dotenv from 'dotenv';
+import pg from 'pg';
 
-dotenv.config();
+const { Pool } = pg;
 
-// Support both DATABASE_URL (Render standard) and DB_URL
+// Read DATABASE_URL or DB_URL from process.env (Render sets DATABASE_URL automatically)
 const connectionString = process.env.DATABASE_URL || process.env.DB_URL;
 
 /**
