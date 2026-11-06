@@ -1,17 +1,18 @@
 import { Pool } from 'pg';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+// Support both DATABASE_URL (Render standard) and DB_URL
+const connectionString = process.env.DATABASE_URL || process.env.DB_URL;
 
 /**
  * Connection pool for PostgreSQL database.
  */
 const pool = new Pool({
-    connectionString: process.env.DB_URL,
-    ssl: true
+    connectionString: connectionString,
+    ssl: connectionString ? { rejectUnauthorized: false } : false
 });
-
-/**
- * Common SSL Issue handling if unauthorized cert errors occur:
- * ssl: { rejectUnauthorized: false }
- */
 
 let db = null;
 
