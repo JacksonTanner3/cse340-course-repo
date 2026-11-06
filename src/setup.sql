@@ -1,4 +1,23 @@
 -- ========================================
+-- Drop existing tables if they exist
+-- ========================================
+DROP TABLE IF EXISTS project_category CASCADE;
+DROP TABLE IF EXISTS project CASCADE;
+DROP TABLE IF EXISTS category CASCADE;
+DROP TABLE IF EXISTS organization CASCADE;
+
+-- ========================================
+-- Organization Table
+-- ========================================
+CREATE TABLE organization (
+    organization_id SERIAL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    description TEXT NOT NULL,
+    contact_email VARCHAR(255) NOT NULL,
+    logo_filename VARCHAR(255) NOT NULL
+);
+
+-- ========================================
 -- Organization Table
 -- ========================================
 CREATE TABLE organization (
