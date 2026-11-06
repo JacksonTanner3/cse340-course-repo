@@ -58,3 +58,61 @@ INSERT INTO project (organization_id, title, description, location, project_date
 (3, 'Annual School Supply Drive Packing', 'Packing backpacks for local children.', 'Community Memorial Hall', '2026-08-15'),
 (3, 'Veterans Memorial Park Restoration', 'Power-washing stone monuments.', 'Veterans Memorial Grounds', '2026-09-05'),
 (3, 'Winter Coat Drive Prep & Sorting', 'Sorting donated winter outerwear.', 'UnityServe Warehouse', '2026-10-15');
+
+-- ========================================
+-- Category Table
+-- ========================================
+CREATE TABLE category (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- ========================================
+-- Project Category Junction Table (Many-to-Many)
+-- ========================================
+CREATE TABLE project_category (
+    project_id INT NOT NULL,
+    category_id INT NOT NULL,
+    PRIMARY KEY (project_id, category_id),
+    CONSTRAINT fk_project
+        FOREIGN KEY (project_id)
+        REFERENCES project (project_id)
+        ON DELETE CASCADE,
+    CONSTRAINT fk_category
+        FOREIGN KEY (category_id)
+        REFERENCES category (category_id)
+        ON DELETE CASCADE
+);
+
+-- ========================================
+-- Insert Sample Data: Categories
+-- ========================================
+INSERT INTO category (name) VALUES
+('Construction & Repair'),
+('Environmental & Gardening'),
+('Community Outreach');
+
+-- ========================================
+-- Associate Projects with Categories
+-- ========================================
+INSERT INTO project_category (project_id, category_id) VALUES
+-- BrightFuture Builders Projects (1-5)
+(1, 1), (1, 3), -- Park Bench Assembly
+(2, 1),         -- Housing Framing
+(3, 1), (3, 3), -- School Ramp
+(4, 1),         -- Bus Shelter
+(5, 1),         -- Roof Repair
+
+-- GreenHarvest Growers Projects (6-10)
+(6, 2),         -- Garden Planting
+(7, 1), (7, 2), -- Greenhouse Build
+(8, 2),         -- Drip Irrigation
+(9, 1), (9, 2), -- Compost Bin Workshop
+(10, 2), (10, 3), -- Autumn Harvest
+
+-- UnityServe Volunteers Projects (11-15)
+(11, 2), (11, 3), -- Trail Cleanup
+(12, 3),          -- Senior Yard Care
+(13, 3),          -- School Supply Drive
+(14, 1), (14, 3), -- Memorial Park Restoration
+(15, 3);          -- Coat Drive
