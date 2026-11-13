@@ -20,5 +20,14 @@
         <p><strong>Partner Organization:</strong> <a href="/organization/<%= project.organization_id %>">
                 <%= project.organization_name %>
             </a></p>
+
+        <div class="project-categories">
+            <strong>Categories:</strong>
+            <% categories.forEach(category=> { %>
+                <a href="/category/<%= category.category_id %>" class="category-tag">
+                    <%= category.name %>
+                </a>
+                <% }); %>
+        </div>
     </main>
     <%- include('partials/footer') %>
